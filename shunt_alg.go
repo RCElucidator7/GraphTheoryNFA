@@ -34,7 +34,7 @@ func infixToPostfix(infix string) string {
 
 					stack = stack[:len(stack)-1]
 				}
-
+				stack = append(stack, r)
 			default:
 				pFix = append(pFix, r)
 		}
@@ -52,6 +52,6 @@ func infixToPostfix(infix string) string {
 func main() {
 	//Input a.b.c*
 	fmt.Println("Infix: a.b.c*")
-	fmt.Println("Postfis: ", infixToPostfix("a.b.c*"))
+	fmt.Println("Postfis: ", infixToPostfix("(a.b.c*)"))
 	//Should return ab.c*
 }
