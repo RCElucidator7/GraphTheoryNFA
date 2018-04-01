@@ -26,34 +26,49 @@ func regex(postfix string) *NFA {
 	//variable for an array of pointers for NFA struct
 	stack := []*NFA{}
 
-	for _, r := postfix {
+	for _, r := range postfix {
 		switch r {
 			case '.':
-				fragtwo := stack[len(stack)-1]
+				fragment2 := stack[len(stack)-1]
 				stack = stack[:len(stack)-1]
-				fragone := stack[len(stack)-1]
+				fragment1 := stack[len(stack)-1]
 				stack = stack[:len(stack)-1]
 
-				fragone.accept.edge1 = fragtwo.initial
+				fragment1.accept.edge1 = fragment2.initial
 
-				stack = append(stack, &NFA{initial: fragone.initial, accept: fragtwo.accept})
+				stack = append(stack, &NFA{initial: fragment1.initial, accept: fragment2.accept})
 
 			case '|':
-				fragtwo := stack[len(stack)-1]
+				fragment2 := stack[len(stack)-1]
 				stack = stack[:len(stack)-1]
-				fragone := stack[len(stack)-1]
+				fragment1 := stack[len(stack)-1]
 				stack = stack[:len(stack)-1]
 
 				accept := state{}
-				initial := state{edge1: fragone.initial, edge2: fragtwo.initial}
-				fragone.accept.edge1 = &accept
-				fragtwo.accept.edge1 = &accept
+				initial := state{edge1: fragment1.initial, edge2: fragment2.initial}
+				fragment1.accept.edge1 = &accept
+				fragment2.accept.edge1 = &accept
 
 				stack = append(stack, &NFA{initial: &initial, accept: &accept})
 
 			case '*':
+				fragment := stack[len(stack)-1]
+				stack = stack[:len(stack)-1]
 
+				accept := state{}
+				initial := state{edge1: fragment.initial, edge2: &accept}
+				
+				//Join accept state of fragment edge1 to the initial state
+				fragment.accept.edge1 = fragment.initial
+				//Join accept state of fragment edge2 to the accept state
+				fragment.accept.edge2 = &accept
+
+				stack = append(stack, &NFA{initial: &initial, accept: &accept})
 			default:
+				accept := state{}
+				initial := state{symbol: r, edge1: &accept}
+
+				stack = append(stack, &NFA{initial: &initial, accept: &accept})
 		}
 	}
 	
