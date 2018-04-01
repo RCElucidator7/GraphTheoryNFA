@@ -14,6 +14,7 @@ type state struct {
 	edge2 *state
 }
 
+//NFA struct
 type NFA struct{
 	//Value for the inital state
 	initial *state
@@ -72,7 +73,52 @@ func regex(postfix string) *NFA {
 		}
 	}
 	
+	//Error handling
+	if len(stack) != 1 {
+		fmt.Println("Error: ", len(stack), stack)
+	}
+
 	return stack[0]
+}
+
+func addState() {
+
+}
+
+func postmatch(post string, s string) bool {
+	match := false
+	nfa := regex(post)
+
+	//Licked list of states
+	current := []*state{nfa.initial}
+	next := []*state{}
+
+	current = addState(current[:], nfa.initial, nfa.accept)
+
+	for _, r := range s {
+		for _, curs := range current {
+
+			if curs.symbol == r {
+				//If the current character from the input is equal to the symbol of the current state
+				if curs.symbol == r {
+					next = addState(next[:], curs.edge1, nfa.accept)
+				}
+			}
+		}
+		//Set current states to next states
+		current = next
+		//Clear next states
+		next = []*state{}
+	}
+
+	for _, curs := range current {
+		if curs == nfa.accept {
+			match = true
+			break
+		}
+	}
+
+	return match
 }
 
 func main() {
