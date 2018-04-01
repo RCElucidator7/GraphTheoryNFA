@@ -81,8 +81,16 @@ func regex(postfix string) *NFA {
 	return stack[0]
 }
 
-func addState() {
+func addState(list []*state, s *state, a *state) []*state {
+	list = append(list, s)
 
+	if s != a && s.symbol == 0 {
+		list = addState(list, s.edge1, a)
+		if s.edge2 != nil {
+			list = addState(list, s.edge2, a)
+		}
+	}
+	return list
 }
 
 func postmatch(post string, s string) bool {
@@ -124,4 +132,11 @@ func postmatch(post string, s string) bool {
 func main() {
 	NFA := regex("ab.c*|")
 	fmt.Println(NFA)
+
+	//Should Return True
+	fmt.Println(postmatch("ab.c*|", "cccc"))
+
+	//Should Return Flase
+	fmt.Println(postmatch("ab.c*|", "abc"))
+
 }
