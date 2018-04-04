@@ -4,9 +4,10 @@ import (
 	"fmt"
 )
 
+//Function that translates from infix to postfix notation
 func infixToPostfix(infix string) string {
 	//Assign special characters int values
-	special := map[rune]int{'*': 10 , '.': 9 , '|': 8}
+	special := map[rune]int{'*': 10 , '.': 9 , '|': 8, '+': 7, '?': 6}
 
 
 	//Empty array of runes
