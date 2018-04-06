@@ -53,23 +53,27 @@ func infixToPostfix(infix string) string {
 
 func main() {
 	//Input a.b.c*
-	fmt.Println("Infix: a.b.c*")
-	fmt.Println("Postfis: ", infixToPostfix("(a.b.c*)"))
-	//Should return ab.c*
+	fmt.Println("Infix: (a.b.c)*")
+	fmt.Println("Postfis: ", infixToPostfix("(a.b.c)*"))
+	//Should return ab.c.*
+	fmt.Println()
 
 	//Input a.(b|d).c*
 	fmt.Println("Infix: a.(b|d).c*")
 	fmt.Println("Postfis: ", infixToPostfix("a.(b|d).c*"))
 	//Should return abd|.c*
+	fmt.Println()
 
 	//Input a.(b.b)+.c
 	fmt.Println("Infix: a.(b.b)+.c")
 	fmt.Println("Postfis: ", infixToPostfix("a.(b.b)+.c"))
 	//Should return abb..c.+
+	fmt.Println()
 
 	//Input (a.(b|d))*
 	fmt.Println("Infix: (a.(b|d))*")
 	fmt.Println("Postfis: ", infixToPostfix("(a.(b|d))*"))
 	//Should return abd|.*
+	fmt.Println()
 
 }
