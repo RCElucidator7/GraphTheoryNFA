@@ -83,13 +83,25 @@ func regex(postfix string) *NFA {
 			stack = stack[:len(stack)-1]
 
 			accept := state{}
-			initial := state{edge1: fragment.initial}
+			//initial := state{edge1: fragment.initial}
 			middle := state{edge1: fragment.initial, edge2: &accept}
 
 			fragment.accept.edge1 = &middle
 
 			//Push states to the stack
 			stack = append(stack, &NFA{initial: fragment.initial, accept: &accept})
+		case '?':
+			//Pop fragment off the stack
+			fragment := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+
+			accept := state{}
+			initial := state{edge1: fragment.initial, edge2: &accept}
+
+			fragment.accept.edge1 = &accept
+
+			//Push states to the stack
+			stack = append(stack, &NFA{initial: &initial, accept: &accept})
 		default:
 			accept := state{}
 			initial := state{symbol: r, edge1: &accept}
@@ -160,14 +172,15 @@ func postmatch(post string, s string) bool {
 }
 
 func main() {
-	//NFA := regex("ab.c*|")
-	NFA := regex("01.0*|")
+	NFA := regex("ab.c*|")
+	//NFA := regex("01.0*|")
 	fmt.Println(NFA)
 
+	//Examples
 	//Should Return True
 	fmt.Println(postmatch("ab.c*|", "cccc"))
 
-	fmt.Println(postmatch("01*0|", "01110"))
+	fmt.Println(postmatch("ab.c*|", "aaaa"))
 
 	//Should Return Flase
 	fmt.Println(postmatch("ab.c*|", "abc"))
