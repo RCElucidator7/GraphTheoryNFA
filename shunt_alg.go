@@ -1,3 +1,5 @@
+//Ryan Conway
+//ID - G00332826
 package main
 
 import (

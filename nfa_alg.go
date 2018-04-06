@@ -1,3 +1,5 @@
+//Ryan Conway
+//ID - G00332826
 package main
 
 import (
@@ -6,7 +8,6 @@ import (
 
 //state structure
 type state struct {
-
 	//rune used to detect characters/symbols
 	symbol rune
 
@@ -111,10 +112,11 @@ func regex(postfix string) *NFA {
 		}
 	}
 
-	//Error handling
+	//Error handler was throwing errors
+	/*//Error handling
 	if len(stack) != 1 {
 		fmt.Println("Error: ", len(stack), stack)
-	}
+	}*/
 
 	return stack[0]
 }
@@ -172,17 +174,30 @@ func postmatch(post string, s string) bool {
 }
 
 func main() {
+	//Regular expression example
 	NFA := regex("ab.c*|")
-	//NFA := regex("01.0*|")
 	fmt.Println(NFA)
 
 	//Examples
+	fmt.Println("Regular Expression match function:")
+	fmt.Println("Input : ab.c*|")
 	//Should Return True
-	fmt.Println(postmatch("ab.c*|", "cccc"))
+	fmt.Println("Output:", postmatch("ab.c*|", "cccc"))
+	fmt.Println()
 
-	fmt.Println(postmatch("ab.c*|", "aaaa"))
-
+	fmt.Println("Input : ab.c*|")
 	//Should Return Flase
-	fmt.Println(postmatch("ab.c*|", "abc"))
+	fmt.Println("Output:", postmatch("ab.c*|", "abc"))
+	fmt.Println()
+
+	fmt.Println("Input : abd|.c*")
+	//Should Return true
+	fmt.Println("Output:", postmatch("abd|.c*", "ab"))
+	fmt.Println()
+
+	fmt.Println("Input : abd|.c*")
+	//Should Return false
+	fmt.Println("Output:", postmatch("abd|.c*", "abd"))
+	fmt.Println()
 
 }
