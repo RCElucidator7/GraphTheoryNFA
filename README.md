@@ -27,7 +27,8 @@ To run the shunting algorithm.
 
 To run Thompsons construction file.
 
-Sources used: 
+###Sources used:###
+ 
 https://www.regular-expressions.info
 https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
 Dr Ian McLoughlins lecture notes/videos

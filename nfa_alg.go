@@ -246,6 +246,7 @@ func main() {
 	fmt.Println("Output:", postmatch("abd|.c*", "abd"))
 	fmt.Println()
 
+	//Using both the shunting algoritm and thompsons algorithm
 	fmt.Println("Converting (a.b.c)* to a postfix notation")
 	value := infixToPostfix("(a.b.c)*")
 	fmt.Println("Postfix value: ", value)
@@ -254,4 +255,23 @@ func main() {
 	matchValue := postmatch(value, "abc")
 	//Should return true
 	fmt.Println("Does the string match? : ", matchValue)
+	fmt.Println()
+
+	//User input option
+	fmt.Println("Enter a infix notation: (or -1 to exit)")
+	var infixInpit string
+	fmt.Scanln(&infixInpit)
+
+	if infixInpit == "-1" {
+		fmt.Println("Thank you for running this program")
+	} else {
+		infixInpit = infixToPostfix(infixInpit)
+		fmt.Println("Postfix value: ", infixInpit)
+
+		fmt.Println("Now Please enter a string to see if it matches with the postfix value: ")
+		var input string
+		fmt.Scanln(&input)
+		matchValue = postmatch(value, input)
+		fmt.Println("Does the string match? : ", matchValue)
+	}
 }
